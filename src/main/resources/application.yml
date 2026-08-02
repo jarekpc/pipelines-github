@@ -3,4 +3,4 @@ spring:
     name: helloworld
 
 server:
-  port: 8080
+  port: ${PORT:8080}

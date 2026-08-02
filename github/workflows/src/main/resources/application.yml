@@ -1,7 +1,0 @@
-# Konfiguracja aplikacji HelloWorld (Spring Boot 4)
-spring:
-  application:
-    name: helloworld
-
-server:
-  port: 8080

@@ -1,0 +1,9 @@
+# Render Blueprint – opcjonalny (można też deployować z dashboardu)
+services:
+  - type: web
+    name: helloworld
+    runtime: docker
+    repo: https://github.com/jarekpc/pipelines-github
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /hello
