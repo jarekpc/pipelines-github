@@ -2,8 +2,12 @@
 FROM eclipse-temurin:26-jdk AS build
 WORKDIR /app
 
-# Wrapper Mavena (mvnw sam pobiera Mavena) i kod źródłowy
-COPY mvnw mvnw.cmd .mvn ./
+# Narzedzia wymagane przez wrapper Mavena (pobieranie + rozpakowanie)
+RUN apt-get update && apt-get install -y --no-install-recommends curl unzip && rm -rf /var/lib/apt/lists/*
+
+# Wrapper Mavena (mvnw sam pobiera Mavena) i kod zrodlowy
+COPY mvnw mvnw.cmd ./
+COPY .mvn ./.mvn
 COPY pom.xml ./
 COPY src ./src
 
@@ -13,7 +17,7 @@ RUN chmod +x mvnw && ./mvnw -B -ntp -DskipTests package
 FROM eclipse-temurin:26-jre
 WORKDIR /app
 
-# Aplikacja nie działa jako root (dobra praktyka bezpieczeństwa)
+# Aplikacja nie dziala jako root (dobra praktyka bezpieczenstwa)
 RUN groupadd -r spring && useradd -r -g spring spring
 
 COPY --from=build /app/target/*.jar /app/helloworld.jar
